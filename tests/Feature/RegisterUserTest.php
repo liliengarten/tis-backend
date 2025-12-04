@@ -35,23 +35,25 @@ class RegisterUserTest extends TestCase
     public function test_register_with_taken_email()
     {
         $payload = [
-            'fio' => 'Test User',
-            'email' => 'testuser@example.com',
-            'password' => 'secret123',
+            'fio' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => 'adminadmin',
         ];
+
+//        $this->assertDatabaseHas('users', [
+//            'fio' => 'admin',
+//            'email' => 'admin@admin.com'
+//        ]);
 
         $response = $this->postJson('/api/signup', $payload);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'data' => [
-                'user_token'
-            ]
-        ]);
-
-        $this->assertDatabaseHas('users', [
-            'email' => 'testuser@example.com',
-            'fio' => 'Test User'
+            'code' => '422',
+            'message' => 'Validation Error',
+            'errors' => [[
+                'email' => ['The email had already been taken.']
+            ]]
         ]);
     }
 
