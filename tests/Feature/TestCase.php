@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Tests\CreatesApplication;
 
 abstract class TestCase extends BaseTestCase
 {
